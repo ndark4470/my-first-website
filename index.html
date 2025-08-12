@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Yeşil Yol Haritası</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #f0f2f5;
+      color: #000000;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #00c8ff;
+      color: rgb(60, 18, 175);
+    }
+
+    .image-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .image-gallery img {
+      width: 200px;
+      height: auto;
+      border-radius: 0;
+      object-fit: cover;
+    }
+
+    nav a.logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #000000;
+    }
+    .hero-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4rem 2rem;
+      background: white;
+      text-align: center;
+      flex-direction: column;
+      max-width: 1200px;
+      margin: 2rem auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0);
+    }
+    .hero-content {
+      max-width: 600px;
+    }
+    .hero-content h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      color: #000000;
+    }
+    .hero-content p {
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      color: #000000;
+    }
+    .hero-content button {
+      background-color: #000000;
+      color: rgb(255, 255, 255);
+      border: none;
+      padding: 0.75rem 1.8rem;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .hero-content button:hover {
+      background-color: #00ffe5;
+    }
+    .hero-image {
+      width: 350px;
+      height: 250px;
+      background-color: #d1f2eb;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00c8ff;
+      font-weight: bold;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(22,160,133,0.2);
+    }
+    .about-me {
+      max-width: 900px;
+      background: white;
+      margin: 3rem auto;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0);
+    }
+    .about-me h2 {
+      color: #00c8ff;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    .about-me p {
+      color: #000000;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+    
+    @media (max-width: 900px) {
+      .hero-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-image {
+        margin-top: 2rem;
+        width: 100%;
+        height: 200px;
+      }
+      .hero-content {
+        max-width: 100%;
+      }
+    }
+
+    /* About container - düzenlenmiş hali */
+    .about-container {
+      /* position: absolute kaldırıldı */
+      /* transform kaldırıldı */
+      
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      
+      background: rgb(255, 255, 255);
+      border: 4px solid #000000;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px #00c8ff;
+      
+      padding: 2rem 3rem;
+      max-width: 900px;
+      width: 90%;
+      margin: 3rem auto; /* Ortalamak için margin eklendi */
+    }
+
+    .about-box {
+      flex: 2;
+      color: rgb(0, 0, 0);
+      font-size: 1.3rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .photo-box {
+      flex: 1;
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0,191,255,0.4);
+    }
+
+    .hero-section img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .about-me-box {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 25px 30px;
+      border: 2px solid black;       
+      box-shadow: 0 4px 12px #00c8ff; 
+      border-radius: 12px;
+      background-color: white;
+      color: black;                     
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    /* İletişim bölümü */
+    .contact-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      
+      background: rgb(255, 255, 255);
+      border: 4px solid #000000;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px #00c8ff;
+      
+      padding: 2rem 3rem;
+      max-width: 900px;
+      width: 90%;
+      margin: 3rem auto;
+    }
+
+    .contact-box {
+      flex: 1;
+      color: rgb(0, 0, 0);
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .contact-box h2 {
+      color: #00c8ff;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.5rem 0;
+    }
+
+    .contact-item strong {
+      min-width: 80px;
+      color: #000000;
+    }
+
+    .contact-item a {
+      color: #00c8ff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: #000000;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .about-container, .contact-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+        padding: 1.5rem 2rem;
+      }
+      
+      .about-box, .contact-box {
+        font-size: 1.1rem;
+      }
+
+      .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+      }
+    }
+
+    .circle-photo-container {
+  display: flex;
+  justify-content: center; /* Ortalar */
+  gap: 30px;               /* İki fotoğraf arası boşluk */
+  margin: 40px 0;
+}
+
+.circle-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;      /* Tam yuvarlak */
+  overflow: hidden;        /* Taşan kısımları gizle */
+  box-shadow: 0 0 12px #00c8ff; /* Mavi gölge */
+  border: 3px solid #000000; /* Mavi çerçeve */
+  cursor: pointer;
+}
+
+.circle-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* Resmi kırpma ve sığdır */
+  display: block;
+}
+
+.team-section {
+  max-width: 900px;
+  background: white;
+  margin: 3rem auto;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(10, 132, 255, 0.3);
+  color: #000000;
+}
+
+.team-section h2 {
+  color: #0a84ff;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Ana Sayfa</a>
+    <ul>
+      <li><a href="#hakkimda">Hakkımda</a></li>
+      <li><a href="#iletisim">İletişim</a></li>
+      <li><a href="part-of-city.html">Şehir Bölümleri</a></li>
+      <li><a href="#page-end">Ekip</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero-section" role="banner">
+  <div class="hero-content">
+    <h1>Şehir İçi Ulaşımda Yeni Çözümler</h1>
+    <p>
+      Çevreci ulaşımı teşvik eden, elektrikli araçlar ve bisiklet yollarını kolayca bulabileceğiniz akıllı haritalar ve daha fazlası...
+    </p>
+    <button type="button">Hemen Başla</button>
+  </div>
+  </header>
+
+  <div class="image-gallery">
+    <img src="resim2.jpg" alt="Resim 1">
+    <img src="resim3.jpg" alt="Resim 2">
+    <img src="resim4.jpg" alt="Resim 3">
+    <img src="resim5.jpg" alt="Resim 4">
+  </div>
+
+  <div class="about-container" id="hakkimda">
+    <div class="about-box">
+      <p>
+        2050 yılında, bir şirketin CEO'su olarak yapay zekalarla insanların hayatını kolaylaştırmayı hedefliyorum.  
+        Teknolojiyi kullanarak daha sürdürülebilir, erişilebilir ve verimli çözümler üretmek için çalışıyorum.
+      </p>
+    </div>
+    <div class="photo-box">
+      <img src="resim6.jpg" alt="Kendi Fotoğrafım" />
+    </div>
+  </div>
+
+  <div class="contact-container" id="iletisim">
+    <div class="contact-box">
+      <h2>İletişim</h2>
+      <div class="contact-item">
+        <strong>Email:</strong>
+        <a href="mailto:ornek@email.com"> ndark4470@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <strong>Tel:</strong>
+        <a href="tel:+905551234567"> +90 543 322 86 64</a>
+      </div>
+      <div class="contact-item">
+        <strong>LinkedIn:</strong>
+        <a href="https://linkedin.com/in/profilim" target="_blank"> https://www.linkedin.com/in/kaan-ka%C5%9F%C4%B1kc%C4%B1-116052365</a>
+      </div>
+      <div class="contact-item">
+        <strong>Adres:</strong>
+        <span>Kayseri, Türkiye</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="circle-photo-container">
+  <div class="circle-photo">
+    <img src="resim6.jpg" alt="Fotoğraf 1" />
+  </div>
+  <div class="circle-photo">
+    <img src="resim7.jpg" alt="Fotoğraf 2" />
+  </div>
+  </div>
+
+  <div id="page-end"></div>
+
+
+
+
+</body>
+</html>
